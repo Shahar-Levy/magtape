@@ -45,12 +45,11 @@ jobs:
           # push is no longer defaulted to true under v2; to push you must specify push is true
           push: true
           # Uses the version output exposed by the Prepare step to set the tag under v2
-          # tags: tmobile/magtape-init:${{ steps.prep.outputs.version }},tmobile/magtape-init:latest
-          tags: ilrudie/magtape-init:${{ steps.prep.outputs.version }},ilrudie/magtape-init:latest
+          tags: tmobile/magtape-init:${{ steps.prep.outputs.version }},tmobile/magtape-init:latest
  
   # Build and push magtape container image
   build-magtape-image:
-    name: Push magtape images to DockerHub
+    name: Build and push magtape images to DockerHub
     runs-on: ubuntu-latest
 
     steps:
@@ -87,5 +86,4 @@ jobs:
           # push is no longer defaulted to true under v2; to push you must specify push is true
           push: true
           # Uses the version output exposed by the Prepare step to set the tag under v2
-          # tags: tmobile/magtape:${{ steps.prep.outputs.version }},tmobile/magtape:latest
-          tags: ilrudie/magtape:${{ steps.prep.outputs.version }},ilrudie/magtape:latest
+          tags: tmobile/magtape:${{ steps.prep.outputs.version }},tmobile/magtape:latest
