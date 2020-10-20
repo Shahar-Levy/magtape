@@ -48,7 +48,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
       with:
         driver: docker-container
-        driver-opts: moby/buildkit:buildx-stable-1
+        driver-opts: image=moby/buildkit:buildx-stable-1
         use: true
 
     - name: Build magtape-init Container Image
