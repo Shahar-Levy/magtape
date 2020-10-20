@@ -40,7 +40,6 @@ jobs:
     - name: Prepare
       id: prep
       run: |
-        docker context list
         echo ::set-output name=version::sha-${GITHUB_SHA::7}
 
     # Part of docker/build-push-action@v2; setting up the build system
@@ -99,9 +98,8 @@ jobs:
         GIT_SHA=${{github.sha}}
         # kind load image-archive /tmp/magtape-init-sha-${GIT_SHA::7}.tar
         # kind load image-archive /tmp/magtape-sha-${GIT_SHA::7}.tar
-        docker images
-        kind load docker-image tmobile/magtape-init-sha-${GIT_SHA::7}.tar
-        kind load docker-image tmobile/magtape-sha-${GIT_SHA::7}.tar
+        kind load docker-image tmobile/magtape-init:sha-${GIT_SHA::7}.tar
+        kind load docker-image tmobile/magtape-sha:${GIT_SHA::7}.tar
         echo "Updating target image to use local ref"
         sed -i='' -E "s/(MAGTAPE_VERSION := )(.*$)/\1sha-${GIT_SHA::7}/" Makefile
         sed -i='' -E 's/(imagePullPolicy:) Always/\1 IfNotPresent/' deploy/manifests/magtape-deploy.yaml
