@@ -40,6 +40,7 @@ jobs:
     - name: Prepare
       id: prep
       run: |
+        docker context list
         echo ::set-output name=version::sha-${GITHUB_SHA::7}
 
     # Part of docker/build-push-action@v2; setting up the build system
@@ -58,7 +59,7 @@ jobs:
         # Instead output a .tar image archive.
         # outputs: type=oci,dest=/tmp/magtape-init-${{ steps.prep.outputs.version }}.tar
         # Load image into local docker default context
-        outputs: type=docker,default
+        outputs: type=docker
         # Uses the version output exposed by the Prepare step to set the tag under v2
         tags: tmobile/magtape-init:${{ steps.prep.outputs.version }}
 
@@ -75,7 +76,7 @@ jobs:
         # Instead output a .tar image archive
         # outputs: type=oci,dest=/tmp/magtape-${{ steps.prep.outputs.version }}.tar
         # Load image into local docker default context
-        outputs: type=docker,default
+        outputs: type=docker
         # Uses the version output exposed by the Prepare step to set the tag under v2
         tags: tmobile/magtape:${{ steps.prep.outputs.version }}
 
@@ -94,7 +95,6 @@ jobs:
         GIT_SHA=${{github.sha}}
         # kind load image-archive /tmp/magtape-init-sha-${GIT_SHA::7}.tar
         # kind load image-archive /tmp/magtape-sha-${GIT_SHA::7}.tar
-        docker context list
         kind load docker-image /tmp/magtape-init-sha-${GIT_SHA::7}.tar
         kind load docker-image /tmp/magtape-sha-${GIT_SHA::7}.tar
         echo "Updating target image to use local ref"
