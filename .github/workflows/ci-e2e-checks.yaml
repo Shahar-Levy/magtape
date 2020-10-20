@@ -59,8 +59,6 @@ jobs:
         file: ./app/magtape-init/Dockerfile
         # Don't push the image to a registry
         push: false
-        # Instead output a .tar image archive.
-        # outputs: type=oci,dest=/tmp/magtape-init-${{ steps.prep.outputs.version }}.tar
         # Load image into local docker default context
         outputs: type=docker
         # Uses the version output exposed by the Prepare step to set the tag under v2
@@ -76,8 +74,6 @@ jobs:
         file: ./app/magtape/Dockerfile
         # Don't push the image to a registry
         push: false
-        # Instead output a .tar image archive
-        # outputs: type=oci,dest=/tmp/magtape-${{ steps.prep.outputs.version }}.tar
         # Load image into local docker default context
         outputs: type=docker
         # Uses the version output exposed by the Prepare step to set the tag under v2
@@ -92,12 +88,10 @@ jobs:
 
     - name: Install MagTape
       timeout-minutes: 10
-      # kind load image-archive takes the .tar outputted by buildx and loads into kind's containerd image cache
+      # kind load docker-image: loads image from docker default context into kind local image registry
       run: |
         echo "Loading MagTape images to KinD nodes"
         GIT_SHA=${{github.sha}}
-        # kind load image-archive /tmp/magtape-init-sha-${GIT_SHA::7}.tar
-        # kind load image-archive /tmp/magtape-sha-${GIT_SHA::7}.tar
         kind load docker-image tmobile/magtape-init:sha-${GIT_SHA::7}
         kind load docker-image tmobile/magtape:sha-${GIT_SHA::7}
         echo "Updating target image to use local ref"
