@@ -95,6 +95,7 @@ jobs:
         GIT_SHA=${{github.sha}}
         # kind load image-archive /tmp/magtape-init-sha-${GIT_SHA::7}.tar
         # kind load image-archive /tmp/magtape-sha-${GIT_SHA::7}.tar
+        docker images list -a
         kind load docker-image tmobile/magtape-init-sha-${GIT_SHA::7}.tar
         kind load docker-image tmobile/magtape-sha-${GIT_SHA::7}.tar
         echo "Updating target image to use local ref"
