@@ -99,7 +99,7 @@ jobs:
         # kind load image-archive /tmp/magtape-init-sha-${GIT_SHA::7}.tar
         # kind load image-archive /tmp/magtape-sha-${GIT_SHA::7}.tar
         kind load docker-image tmobile/magtape-init:sha-${GIT_SHA::7}
-        kind load docker-image tmobile/magtape-sha:${GIT_SHA::7}
+        kind load docker-image tmobile/magtape:sha-${GIT_SHA::7}
         echo "Updating target image to use local ref"
         sed -i='' -E "s/(MAGTAPE_VERSION := )(.*$)/\1sha-${GIT_SHA::7}/" Makefile
         sed -i='' -E 's/(imagePullPolicy:) Always/\1 IfNotPresent/' deploy/manifests/magtape-deploy.yaml
